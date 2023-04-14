@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key}")
+    @Value("${jwt.secret}")
     private String key;
     private final long validityInMilliseconds = 30 * 60 * 1000L;
     private final UserDetailsService userDetailsService;
@@ -31,9 +31,10 @@ public class JwtTokenProvider {
 //        this.validityInMilliseconds = validityInMilliseconds;
     }
     // 토큰 생성
-    public String CreateToken(String userPk, List<String> roles){
+    public String CreateToken(String userPk, List<String> roles, String nickname){
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위 설정
         claims.put("roles", roles);
+        claims.put("nickname", nickname);
         Date now = new Date();
         return Jwts.builder()
                 .setClaims(claims) // 정보저장
@@ -55,6 +56,15 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+    }
+    public String getUserNickname(String token){
+        String value = (String) Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("nickname");
+        return value;
     }
     // 토큰 유효성, 만료일자 확인
     public boolean validateToken(String jwtToken){

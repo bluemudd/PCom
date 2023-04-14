@@ -22,6 +22,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         // 헤더에서 토큰 받아오기
+        // HttpServletRequest를 사용하면, 값을 받아올수있는데
+        // 만약 회원 정보를 컨트롤러로 보냈을때, HttpServletRequest 객체 안에 데이터들이 들어감.
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request );
         // 토큰이 유효하다면
         if(token != null && jwtTokenProvider.validateToken(token)){

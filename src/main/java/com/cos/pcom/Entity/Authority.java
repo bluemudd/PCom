@@ -18,23 +18,23 @@ public class Authority implements GrantedAuthority {// 계정이 가지고 있�
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @JoinColumn(name = "USERS_ID")
+    private Users users;
 
     private String role;
 
 
-    public static Authority ofUser(User user){
+    public static Authority ofUser(Users users){
         return Authority.builder()
                 .role("ROLE_USER")
-                .user(user)
+                .users(users)
                 .build();
     }
 
-    public static Authority ofAdmin(User user){
+    public static Authority ofAdmin(Users users){
         return Authority.builder()
                 .role("ROLE_ADMIN")
-                .user(user)
+                .users(users)
                 .build();
     }
 

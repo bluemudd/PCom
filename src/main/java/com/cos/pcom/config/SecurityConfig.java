@@ -18,6 +18,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Configuration
@@ -40,6 +45,27 @@ public class SecurityConfig {
 //    }
 
     @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin("http://localhost:8080");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.setMaxAge((long) 3600);
+        configuration.addExposedHeader("accessToken");
+        configuration.addExposedHeader("content-disposition");
+//        configuration.addExposedHeader("Authorization");
+        configuration.setAllowCredentials(true);
+
+
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
+    @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 //h2 콘솔 사용
@@ -50,7 +76,7 @@ public class SecurityConfig {
                 .and()
                 //URL 관리
                 .authorizeRequests()
-                .antMatchers("/join", "/login", "/h2-console/**").permitAll()
+                .antMatchers("/refresh","/AgoraPost","/AgoraFind/{id}","/AgoraDetail/{id}","/AgoraHome","/join", "/login", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

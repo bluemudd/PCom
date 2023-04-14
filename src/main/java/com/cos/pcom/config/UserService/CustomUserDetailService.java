@@ -2,7 +2,6 @@ package com.cos.pcom.config.UserService;
 
 import com.cos.pcom.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.dataloader.CacheKey;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

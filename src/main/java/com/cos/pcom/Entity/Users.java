@@ -1,7 +1,6 @@
 package com.cos.pcom.Entity;
 
 
-import com.cos.pcom.DTO.JoinDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,10 +18,10 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User implements UserDetails {
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="USER_ID")
+    @Column(name="USERS_ID")
     private Long id;
 
     @Column(length = 300, nullable = false, unique = true)
