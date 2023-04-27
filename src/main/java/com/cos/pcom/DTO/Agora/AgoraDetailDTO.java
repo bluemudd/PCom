@@ -18,11 +18,13 @@ public class AgoraDetailDTO {
     private Long id;
     private String title;
     private String nickname;
+    private String email;
     private String content;
     private List<CommentDTO> comments;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     private long likes;
+    private boolean dolike;
     private long views;
 
 }

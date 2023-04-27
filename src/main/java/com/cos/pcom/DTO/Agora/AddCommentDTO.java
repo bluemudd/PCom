@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AgoraPostDTO {
-    String title;
-    String contents;
+public class AddCommentDTO {
+    public Users users;
+    public Long id;
+    public String comment;
 }

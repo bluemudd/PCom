@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="USERS_ID")
     private Long id;
 
     @Column(length = 300, nullable = false, unique = true)
@@ -37,7 +36,7 @@ public class Users implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER) // roles 컬렉션
     @Builder.Default  // 빌더 기본값 설정
     private List<String> roles = new ArrayList<>();
-
+//    @CollectionTable(name="Authority", joinColumns= @JoinColumn(name="USERS_ID"))
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities(){
         return this.roles.stream()

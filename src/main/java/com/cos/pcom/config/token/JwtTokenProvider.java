@@ -46,7 +46,8 @@ public class JwtTokenProvider {
     // 인증 정보 조회
     public Authentication getAuthentication(String token){
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+        System.out.println(userDetails.getPassword());
+        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }
     //토큰 회원 정보 추출
     public String getUserPk(String token){
@@ -66,6 +67,15 @@ public class JwtTokenProvider {
                 .get("nickname");
         return value;
     }
+    public List<String> getUserRoles(String token){
+        List<String> value = (List<String>) Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("roles");
+        return value;
+    }
     // 토큰 유효성, 만료일자 확인
     public boolean validateToken(String jwtToken){
         try{
@@ -77,6 +87,8 @@ public class JwtTokenProvider {
     }
     //Request header에서 토큰값 가져오기
     public String resolveToken(HttpServletRequest request){
-        return request.getHeader("X-AUTH-TOKEN");
+        String token = request.getHeader("Authorization");
+//        request.getHeader("X-AUTH-TOKEN");
+        return token;
     }
 }

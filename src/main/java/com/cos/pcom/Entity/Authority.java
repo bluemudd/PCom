@@ -21,25 +21,25 @@ public class Authority implements GrantedAuthority {// 계정이 가지고 있�
     @JoinColumn(name = "USERS_ID")
     private Users users;
 
-    private String role;
+    private String roles;
 
 
     public static Authority ofUser(Users users){
         return Authority.builder()
-                .role("ROLE_USER")
+                .roles("ROLE_USER")
                 .users(users)
                 .build();
     }
 
     public static Authority ofAdmin(Users users){
         return Authority.builder()
-                .role("ROLE_ADMIN")
+                .roles("ROLE_ADMIN")
                 .users(users)
                 .build();
     }
 
     @Override
     public String getAuthority(){
-        return role;
+        return roles;
     }
 }

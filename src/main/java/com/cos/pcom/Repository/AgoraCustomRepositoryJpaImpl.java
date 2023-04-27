@@ -21,4 +21,13 @@ public class AgoraCustomRepositoryJpaImpl implements AgoraCustomRepository{
         return resultList;
 
     }
+    @Override
+    public void insertAgoraTable(AgoraTable agoraTable){
+        em.persist(agoraTable);
+    }
+    @Override
+    public void deleteAgoraTable(Long id){
+        AgoraTable agoraTable = em.find(AgoraTable.class, id);
+        em.remove(agoraTable);
+    }
 }

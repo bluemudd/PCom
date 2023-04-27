@@ -15,7 +15,7 @@ public class AgoraHomeDTO {
     private Long id;
     private String title;
     private String nickname;
-    private long likes;
+    private long commentsCount;
     private long views;
     private LocalDateTime createTime;
 

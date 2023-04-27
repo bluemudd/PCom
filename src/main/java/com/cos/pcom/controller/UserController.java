@@ -37,12 +37,6 @@ public class UserController {
 
         return  userService.login(userDto);
     }
-    @GetMapping("/user")
-    public String getUser(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return username;
-
-    }
     @GetMapping("/refresh")
     public ResponseEntity<AuthenticationDto> test(@RequestHeader HttpHeaders header){
         String token = header.getFirst("Authorization");

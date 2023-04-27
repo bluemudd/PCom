@@ -9,6 +9,7 @@ import com.cos.pcom.Repository.UserRepository;
 import com.cos.pcom.config.token.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,8 @@ public class UserService {
         AuthenticationDto authenticationDto = new AuthenticationDto();
         authenticationDto.setEmail(users.getEmail());
         authenticationDto.setNickname(users.getNickname());
+        authenticationDto.setRoles(users.getRoles());
+//        UsernamePasswordAuthenticationToken authenticationToken = UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPassword());
 
         return ResponseEntity.ok()
                 .header("accesstoken", jwtTokenProvider.CreateToken(users.getUsername(), users.getRoles(),users.getNickname()))
@@ -55,7 +58,9 @@ public class UserService {
         AuthenticationDto authenticationDto = new AuthenticationDto();
         authenticationDto.setEmail(jwtTokenProvider.getUserPk(token));
         authenticationDto.setNickname(jwtTokenProvider.getUserNickname(token));
+        authenticationDto.setRoles(jwtTokenProvider.getUserRoles(token));
         if(!jwtTokenProvider.validateToken(token)){
+            System.out.println("토큰 무효");
             Users users = userRepository.findByEmail(jwtTokenProvider.getUserPk(token))
                     .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 Email"));
             String newAccessToken = jwtTokenProvider.CreateToken(users.getUsername(),users.getRoles(),users.getNickname());
@@ -64,10 +69,12 @@ public class UserService {
                     .body(authenticationDto);
         }
         else{
+            System.out.println("토큰 유효");
             return ResponseEntity.ok()
                     .header("accesstoken", token)
                     .body(authenticationDto);
         }
 
     }
+
 }

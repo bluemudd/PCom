@@ -31,7 +31,7 @@ public class AgoraTable {
     @Column(name="TITLE")
     private String title;
 
-    @Column(name="LIKES")
+    @Column(name="LIKES", columnDefinition = "long default 0")
     private long likes;
 
     @Column(name="VIEWS", columnDefinition = "long default 0")
@@ -49,6 +49,11 @@ public class AgoraTable {
 
     public void updateView(Long views){
         this.views = views;
+    }
+    public void updateContent(String title, String contents, LocalDateTime updateDate){
+        this.title=title;
+        this.contents=contents;
+        this.updateDate = updateDate;
     }
 
 }
