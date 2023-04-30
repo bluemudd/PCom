@@ -2,23 +2,17 @@ package com.cos.pcom.controller;
 
 
 import com.cos.pcom.DTO.Agora.*;
-import com.cos.pcom.DTO.AuthenticationDto;
-import com.cos.pcom.Entity.Agora.AgoraTable;
 import com.cos.pcom.Entity.Users;
 import com.cos.pcom.Repository.AgoraTableRepository;
 import com.cos.pcom.Repository.UserRepository;
 import com.cos.pcom.Service.AgoraService;
 import com.cos.pcom.config.token.JwtTokenProvider;
-import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "accesstoken")
@@ -27,9 +21,6 @@ import java.util.List;
 public class AgoraController {
 
     private final AgoraService agoraService;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
-    private final AgoraTableRepository agoraTableRepository;
 
     @GetMapping("/AgoraHome")
     public ResponseEntity<List<AgoraHomeDTO>> AgoraHome(){
